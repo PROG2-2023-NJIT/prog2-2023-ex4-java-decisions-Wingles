@@ -114,7 +114,7 @@ public class FlightBooking {
                 this.sourceAirport = SourceAirport.HELSINKI_AIRPORT;
                 break;
             default:
-                System.out.println("Please enter the correct number");
+                System.out.println("Error");
         }
     }
     public void setTripDestination(String tripSource,String tripDestination)
@@ -137,7 +137,7 @@ public class FlightBooking {
                 this.destinationairport = Destinationairport.HELSINKI_AIRPORT;
                 break;
             default:
-                System.out.println("Please enter the correct number");
+                System.out.println("Error");
         }
     }
 
