@@ -1,11 +1,8 @@
 package prog2.exercise4.flight.booking.system;
 
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Date;
 import java.util.Random;
 
 
@@ -275,7 +272,7 @@ public class FlightBooking {
     public void setTicketNumber()
     {   setClassification(tripSource.toString(),tripDestination.toString());
         Random rnd = new Random();
-        int number = rnd.nextInt(1000,9999);
+        int number = rnd.nextInt(9000)+1000;
         String m = String.valueOf(number);
         switch (bookingClass){
             case FIRST:

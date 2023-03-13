@@ -1,11 +1,8 @@
 package prog2.exercise4.flight.booking.system;
 
-import java.sql.SQLOutput;
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.util.Random;
 import java.util.Scanner;
-import java.util.UUID;
 
 public class Main {
     public static void main(String args[]) throws ParseException {
@@ -45,7 +42,7 @@ public class Main {
         String destination = scanner.next();
         flightbooking.setTripDestination(source,destination);
         flightbooking.setClassification(source,destination);
-        
+
         System.out.println(flightbooking);
 
     }
