@@ -7,50 +7,37 @@ import java.util.Random;
 
 
 public class FlightBooking {
-    enum BookingClass{
-        FIRST,BUSINESS,ECONOMY
-    }
-    enum TripType{
-        ONE_WAY,RETURN
-
-    }
-    enum TripSource{
-        BEIJING, SHANGHAI, OULU, NANJING, PARIS,HELSINKI
-    }
-    enum TripDestination{
-        BEIJING, SHANGHAI, OULU, NANJING, PARIS,HELSINKI
-    }
-    enum SourceAirport{
-        NANJING_LUKOU_INTERNATIONAL_AIRPORT, BEIJING_CAPITAL_INTERNATIONAL_AIRPORT,
-        SHANGHAI_PUDONG_INTERNATIONAL_AIRPORT, OULU_AIRPORT, HELSINKI_AIRPORT,
-        PARIS_CHARLES_DE_GAULLE_AIRPORT
-    }
-    enum Destinationairport{
-        NANJING_LUKOU_INTERNATIONAL_AIRPORT, BEIJING_CAPITAL_INTERNATIONAL_AIRPORT,
-        SHANGHAI_PUDONG_INTERNATIONAL_AIRPORT, OULU_AIRPORT, HELSINKI_AIRPORT,
-        PARIS_CHARLES_DE_GAULLE_AIRPORT
-    }
-    private final String flightCompany = "Flights-of-Fancy";
-    private String passengerFullName;
-    private String flightID;
-    private TripSource tripSource ;
-    private SourceAirport sourceAirport ;
-    private TripDestination tripDestination;
-    private Destinationairport destinationAirport;
-    private LocalDate departureDate;
-    private LocalDate returnDate;
+    enum BookingClass{FIRST,BUSINESS,ECONOMY }
+    enum TripType{ONE_WAY,RETURN}
+    enum TripSource{BEIJING, SHANGHAI, OULU, NANJING, PARIS,HELSINKI}
+    enum TripDestination{BEIJING, SHANGHAI, OULU, NANJING, PARIS,HELSINKI}
+    enum SourceAirport{NANJING_LUKOU_INTERNATIONAL_AIRPORT, BEIJING_CAPITAL_INTERNATIONAL_AIRPORT,
+                       SHANGHAI_PUDONG_INTERNATIONAL_AIRPORT, OULU_AIRPORT, HELSINKI_AIRPORT,
+                       PARIS_CHARLES_DE_GAULLE_AIRPORT}
+    enum Destinationairport{NANJING_LUKOU_INTERNATIONAL_AIRPORT, BEIJING_CAPITAL_INTERNATIONAL_AIRPORT,
+                            SHANGHAI_PUDONG_INTERNATIONAL_AIRPORT, OULU_AIRPORT, HELSINKI_AIRPORT,
+                            PARIS_CHARLES_DE_GAULLE_AIRPORT}
     private int childPassengers;
     private int adultPassengers;
     private int totalPassengers;
     private double departingTicketPrice;
     private double returnTicketPrice;
     private double totalTicketPrice;
+    private String passengerFullName;
+    private String flightID;
     private String ticketNumber;
+    private String classification;
+    private final String flightCompany = "Flights-of-Fancy";
+    private TripSource tripSource ;
+    private SourceAirport sourceAirport ;
+    private TripDestination tripDestination;
+    private Destinationairport destinationAirport;
+    private LocalDate departureDate;
+    private LocalDate returnDate;
     private BookingClass bookingClass;
     private TripType tripType;
     private Destinationairport destinationairport;
-    private String classification;
-    boolean xy=false;
+    boolean TF=false;
 
 
     public FlightBooking (String passengerFullName,LocalDate departureDate,LocalDate returnDate,int childPassengers,int adultPassengers){
@@ -117,6 +104,44 @@ public class FlightBooking {
                 System.out.println("Error");
         }
     }
+
+    public void setDepartingTicketPrice(int childPassengers,int adultPassengers)
+    {
+        setClassification(tripSource.toString(),tripDestination.toString());
+        switch (bookingClass) {
+            case FIRST:
+                if (classification.equals("domestic"))
+                    this.departingTicketPrice = (childPassengers+adultPassengers) *345 +250;
+                else
+                    this.departingTicketPrice = (childPassengers+adultPassengers) *375 +250;
+                break;
+            case BUSINESS:
+                if (classification.equals("domestic"))
+                    this.departingTicketPrice = (childPassengers+adultPassengers) *345 +150;
+                else
+                    this.departingTicketPrice = (childPassengers+adultPassengers) *375 +150;
+                break;
+            case ECONOMY:
+                if (classification.equals("domestic"))
+                    this.departingTicketPrice = (childPassengers+adultPassengers) *345 +50;
+                else
+                    this.departingTicketPrice = (childPassengers+adultPassengers) *375 +50;
+            default:
+                break;
+        }
+
+    }
+
+    public void setClassification(String _source,String _destination)
+    {
+      String x = _source +  _destination;
+      if (x.equals("NANJINGBEIJING")||x.equals("BEIJINGNANJING")||x.equals("OULUHELSINKI")||x.equals("HELSINKIOULU"))
+      {
+         this.classification = "domestic";
+      }
+      else
+          this.classification = "international";
+    }
     public void setTripDestination(String tripSource,String tripDestination)
     {
         switch (tripDestination){
@@ -150,23 +175,11 @@ public class FlightBooking {
             Period p = Period.between(departureDate,returnDate);
             if (p.getDays() < 2 && p.getMonths() <=0 &&p.getYears()<=0) {
                 this.returnDate = departureDate.plusDays(2);
-                this.xy = true;
+                this.TF = true;
             } else
                 this.returnDate = returnDate;
 
     }
-
-    public void setClassification(String _source,String _destination)
-    {
-      String x = _source +  _destination;
-      if (x.equals("NANJINGBEIJING")||x.equals("BEIJINGNANJING")||x.equals("OULUHELSINKI")||x.equals("HELSINKIOULU"))
-      {
-         this.classification = "domestic";
-      }
-      else
-          this.classification = "international";
-    }
-
 
     public String getFlightCompany()
     {
@@ -215,32 +228,7 @@ public class FlightBooking {
     {
         return departingTicketPrice;
     }
-    public void setDepartingTicketPrice(int childPassengers,int adultPassengers)
-    {
-        setClassification(tripSource.toString(),tripDestination.toString());
-        switch (bookingClass) {
-            case FIRST:
-                if (classification.equals("domestic"))
-                    this.departingTicketPrice = (childPassengers+adultPassengers) *345 +250;
-                else
-                    this.departingTicketPrice = (childPassengers+adultPassengers) *375 +250;
-                break;
-            case BUSINESS:
-                if (classification.equals("domestic"))
-                    this.departingTicketPrice = (childPassengers+adultPassengers) *345 +150;
-                else
-                    this.departingTicketPrice = (childPassengers+adultPassengers) *375 +150;
-                break;
-            case ECONOMY:
-                if (classification.equals("domestic"))
-                    this.departingTicketPrice = (childPassengers+adultPassengers) *345 +50;
-                else
-                    this.departingTicketPrice = (childPassengers+adultPassengers) *375 +50;
-            default:
-                break;
-        }
 
-    }
     public double getReturnTicketPrice()
     {
         return returnTicketPrice;
@@ -331,20 +319,20 @@ public class FlightBooking {
         setTicketNumber();
         setDepartureDate(departureDate);
         setReturnDate(returnDate);
-        String x = "Thank you for booking your flight with "+ flightCompany+". Following are the details \nof your booking and the trip: \n\nTicket Number:"
+        String T = "Thank you for booking your flight with "+ flightCompany+". Following are the details \nof your booking and the trip: \n\nTicket Number:"
                 +ticketNumber+"\nPassenger Name: "+ passengerFullName+"\nFrom " +tripSource+ " to "+tripDestination +"\nDate of departure: "+departureDate+"\nDate of return: "+returnDate+"(Changed from old returningDate to new returningDate)\nTotal passengers:"+
                 totalPassengers+"\nTotal ticket price in Euros: "+totalTicketPrice;
 
-        String y = "Dear " + passengerFullName+". Thank you for booking your flight with "+ flightCompany+".\nFollowing are the details of your booking and the trip: \nTicket Number:"
+        String F = "Thank you for booking your flight with "+ flightCompany+". Following are the details \nof your booking and the trip: \n\nTicket Number:"
                 +ticketNumber+"\nFrom " +tripSource+ " to "+tripDestination +"\nDate of departure: "+departureDate+"\nDate of return: "+returnDate+"(Changed from old returningDate to new returningDate)\nTotal passengers:"+
                 totalPassengers+"\nTotal ticket price in Euros: "+totalTicketPrice+"\nIMPORTANT NOTICE: As per our policy, the return date was changed because it was \n" +
                 "less than two days apart from your departure date.";
-        if (xy)
+        if (TF)
         {
-            return y;
+            return F;
         }
 
-            return x;
+            return T;
 
     }
 
